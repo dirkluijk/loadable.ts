@@ -1,0 +1,15 @@
+{
+    "name": "loadable-ts",
+    "version": "0.0.0",
+    "description": "Type-safe loading states for TypeScript",
+    "author": "Dirk Luijk <mail@dirkluijk.nl>",
+    "license": "MIT",
+    "private": false,
+    "peerDependencies": {
+        "@angular/core": "^10.0.0",
+        "rxjs": "^6.0.0"
+    },
+    "dependencies": {
+        "tslib": "^2.0.0"
+    }
+}

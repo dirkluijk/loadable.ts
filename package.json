@@ -1,0 +1,70 @@
+{
+  "name": "loadable.ts",
+  "description": "Type-safe loading states for TypeScript",
+  "author": "Dirk Luijk <mail@dirkluijk.nl>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dirkluijk/loadable-ts.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "commit": "git-cz",
+    "start": "ng serve demo",
+    "build": "ng build --prod && yarn copy:docs",
+    "test": "ng test",
+    "lint": "ng lint",
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate",
+    "copy:docs": "cp ./*.md ./LICENSE dist/loadable-ts",
+    "release": "cd projects/loadable-ts && standard-version --infile ../../CHANGELOG.md && cd .. && yarn build"
+  },
+  "private": false,
+  "dependencies": {
+    "@angular/common": "~10.0.11",
+    "@angular/compiler": "~10.0.11",
+    "@angular/core": "~10.0.11",
+    "@angular/forms": "~10.0.11",
+    "@angular/platform-browser": "~10.0.11",
+    "@angular/platform-browser-dynamic": "~10.0.11",
+    "rxjs": "~6.6.2",
+    "tslib": "^2.0.0",
+    "zone.js": "~0.10.2"
+  },
+  "devDependencies": {
+    "@angular-builders/jest": "^10.0.0",
+    "@angular-devkit/build-angular": "~0.1000.7",
+    "@angular-devkit/build-ng-packagr": "~0.1000.7",
+    "@angular/cli": "~10.0.7",
+    "@angular/compiler-cli": "~10.0.11",
+    "@angular/language-service": "~10.0.11",
+    "@commitlint/cli": "^9.1.0",
+    "@commitlint/config-conventional": "^9.1.0",
+    "@dirkluijk/observable-matchers": "^0.3.2",
+    "@dscheerens/tslint-presets": "^8.0.0",
+    "@ngneat/spectator": "^5.0.0",
+    "@types/jest": "^26.0.0",
+    "@types/node": "^12.11.1",
+    "all-contributors-cli": "^6.8.2",
+    "codelyzer": "^6.0.0",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.0.2",
+    "husky": "^4.2.0",
+    "jest": "^26.0.0",
+    "ng-packagr": "^10.0.0",
+    "standard-version": "^9.0.0",
+    "ts-node": "~7.0.0",
+    "tslint": "~6.1.0",
+    "typescript": "~3.9.7"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}
