@@ -19,6 +19,20 @@ It includes:
 * Structural directives for Angular
 * Monad helpers
 
+## Getting started 🌩
+
+##### npm
+
+```
+npm install loadable.ts
+```
+
+##### yarn
+
+```
+yarn add loadable.ts
+```
+
 ## Type-safe loading interfaces
 
 It introduces a `Loadable<T, E>` type that represents three possible states,
@@ -180,20 +194,6 @@ const barName: Loadable<string> = monad(foo)
 // this would be the same as:
 const barName = isSuccess(foo) ? isSuccess(foo.value.loadableBar) ? success(foo.value.loadableBar.value.name) : foo.value.loadableBar : foo
 
-```
-
-## Getting started 🌩
-
-##### npm
-
-```
-npm install loadable.ts
-```
-
-##### yarn
-
-```
-yarn add loadable.ts
 ```
 
 ## Contributors ✨
