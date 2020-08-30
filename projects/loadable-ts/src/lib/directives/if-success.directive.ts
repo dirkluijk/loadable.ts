@@ -19,9 +19,11 @@ import { coerceInput, LoadableDirectiveInput } from './coerce';
     selector: '[ifSuccess]'
 })
 export class IfSuccessDirective<T> implements OnInit, OnDestroy {
-    // alias
-    @Input() public set ifSuccess(value: LoadableDirectiveInput<T>) {
-        this.ifSuccessOf = value;
+    // alias when not using the "let x of y" micro-syntax
+    @Input() public set ifSuccess(value: string | LoadableDirectiveInput<T>) {
+        if (typeof value !== 'string') {
+            this.ifSuccessOf = value;
+        }
     }
 
     @Input() public ifSuccessOf?: LoadableDirectiveInput<T>;

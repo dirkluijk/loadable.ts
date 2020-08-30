@@ -8,20 +8,18 @@ import {
     TemplateRef,
     ViewContainerRef
 } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-import { Loadable } from '../loadable.model';
 import { observeProperty } from '../utils/observe-property';
 
-import { coerceInput } from './coerce';
+import { coerceInput, LoadableDirectiveInput } from './coerce';
 
 @Directive({
     selector: '[ifLoading]'
 })
 export class IfLoadingDirective implements OnInit, OnDestroy {
-
-    @Input() public ifLoading?: Loadable<unknown> | Observable<Loadable<unknown> | undefined>;
+    @Input() public ifLoading?: LoadableDirectiveInput<unknown>;
 
     private viewRef?: EmbeddedViewRef<void>;
 

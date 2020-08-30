@@ -19,9 +19,11 @@ import { coerceInput, LoadableDirectiveInput } from './coerce';
     selector: '[ifFailed]'
 })
 export class IfFailedDirective<E> implements OnInit, OnDestroy {
-    // alias
-    @Input() public set ifFailed(value: LoadableDirectiveInput<unknown, E>) {
-        this.ifFailedOf = value;
+    // alias when not using the "let x of y" micro-syntax
+    @Input() public set ifFailed(value: string | LoadableDirectiveInput<unknown, E>) {
+        if (typeof value !== 'string') {
+            this.ifFailedOf = value;
+        }
     }
 
     @Input() public ifFailedOf?: LoadableDirectiveInput<unknown, E>;
@@ -70,14 +72,14 @@ export class IfFailedDirective<E> implements OnInit, OnDestroy {
 
     // Needed for the Ivy template type-check compiler, see:
     // https://angular.io/guide/structural-directives#improving-template-type-checking-for-custom-directives
-    public static ngTemplateContextGuard<T>(
-        _directive: IfFailedDirective<T>, // tslint:disable-line:variable-name
+    public static ngTemplateContextGuard<E>(
+        _directive: IfFailedDirective<E>, // tslint:disable-line:variable-name
         context: unknown
-    ): context is IfFailedDirectiveContext<T> {
+    ): context is IfFailedDirectiveContext<E> {
         return !!context;
     }
 }
 
-export class IfFailedDirectiveContext<T> {
-    public $implicit: T = null!;
+export class IfFailedDirectiveContext<E> {
+    public $implicit: E = null!;
 }
