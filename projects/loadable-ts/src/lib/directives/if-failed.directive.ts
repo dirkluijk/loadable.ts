@@ -41,9 +41,14 @@ export class IfFailedDirective<E> implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
-        const loadable$ = observeProperty(this as IfFailedDirective<E>, 'ifFailedOf').pipe(
-            switchMap((loadable) => coerceInput(loadable))
-        );
+        const loadableChanged$ = observeProperty(this as IfFailedDirective<E>, 'ifFailedOf');
+        const loadable$ = loadableChanged$.pipe(switchMap((loadable) => coerceInput(loadable)));
+
+        // remove view whenever input changes, because new Observable can be empty.
+        this.subscriptions.add(loadableChanged$.subscribe(() => {
+            this.viewRef = undefined;
+            this.viewContainer.clear();
+        }));
 
         this.subscriptions.add(loadable$.subscribe((loadable) => {
             this.changeDetector.markForCheck();
