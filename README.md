@@ -4,7 +4,7 @@
 
 [![NPM version](http://img.shields.io/npm/v/loadable.ts.svg?style=flat-square)](https://www.npmjs.com/package/loadable.ts)
 [![NPM downloads](http://img.shields.io/npm/dm/loadable.ts.svg?style=flat-square)](https://www.npmjs.com/package/loadable.ts)
-[![Build status](https://img.shields.io/travis/dirkluijk/loadable.ts.svg?style=flat-square)](https://travis-ci.org/dirkluijk/loadable.ts)
+[![Build status](https://github.com/dirkluijk/loadable.ts/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/dirkluijk/loadable.ts/actions/workflows/main.yml)
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 
 ## Overview
