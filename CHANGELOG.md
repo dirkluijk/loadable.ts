@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/dirkluijk/loadable-ts/compare/v0.4.0...v0.5.0) (2023-06-06)
+
+
+### Features
+
+* add mapSuccess operator ([#4](https://github.com/dirkluijk/loadable-ts/issues/4)) ([404ec04](https://github.com/dirkluijk/loadable-ts/commit/404ec04f9369c1549752bdb8f92439e9e8a90052))
+
 ## [0.4.0](https://github.com/dirkluijk/loadable.ts/compare/v0.3.0...v0.4.0) (2022-06-27)
 
 ## [0.3.0](https://github.com/dirkluijk/loadable.ts/compare/v0.2.1...v0.3.0) (2022-06-21)

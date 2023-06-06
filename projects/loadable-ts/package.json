@@ -1,6 +1,6 @@
 {
     "name": "loadable.ts",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "description": "Type-safe loading states for TypeScript",
     "author": "Dirk Luijk <mail@dirkluijk.nl>",
     "license": "MIT",
