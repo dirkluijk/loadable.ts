@@ -2,8 +2,8 @@ import { isObservable, Observable, of } from 'rxjs';
 
 import { Loadable } from '../loadable.model';
 
-export type LoadableDirectiveInput<T, E = unknown> = Loadable<T, E> | Observable<Loadable<T, E> | undefined> | undefined;
+export type LoadableDirectiveInput<T, E = unknown> = Loadable<T, E> | Observable<Loadable<T, E>>;
 
-export function coerceInput<T, E>(loadable: LoadableDirectiveInput<T, E>): Observable<Loadable<T, E> | undefined> {
-    return loadable === undefined ? of(undefined) : isObservable(loadable) ? loadable : of(loadable);
+export function coerceInput<T, E>(loadable: LoadableDirectiveInput<T, E>): Observable<Loadable<T, E>> {
+    return isObservable(loadable) ? loadable : of(loadable);
 }

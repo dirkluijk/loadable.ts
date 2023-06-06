@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { createComponentFactory } from '@ngneat/spectator/jest';
 
-import { Loadable, LOADING, LoadableDirectivesModule, failed, success } from '../../public-api';
+import { Loadable, LOADING, failed, success, IfLoadingDirective, IfSuccessDirective, IfFailedDirective } from '../../public-api';
 
 interface Foo {
     bar: string;
@@ -21,7 +21,6 @@ interface FooError {
 
         <div class="failed" *ifFailed="foo$"></div>
         <div class="failed" *ifFailed="foo$ | async"></div>
-        <div class="failed with-error-message" *ifFailed="foo$ as error">{{ error.message }}</div>
         <div class="failed with-error-message" *ifFailed="let error of foo$ | async">{{ error.message }}</div>
         <div class="failed" *ifFailed="foo"></div>
         <div class="failed with-error-message" *ifFailed="let error of foo">{{ error.message }}</div>
@@ -33,7 +32,7 @@ interface FooError {
         <div class="success" *ifSuccess="foo"></div>
         <div class="success with-value" *ifSuccess="let value of foo">{{ value.bar }}</div>
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class DummyComponent {
     public fooSubject = new BehaviorSubject<Loadable<Foo, FooError>>(LOADING);
@@ -45,7 +44,7 @@ class DummyComponent {
 describe('directives', () => {
     const createComponent = createComponentFactory({
         component: DummyComponent,
-        imports: [LoadableDirectivesModule]
+        imports: [IfLoadingDirective, IfSuccessDirective, IfFailedDirective],
     });
 
     it('should compile', () => {
@@ -63,13 +62,13 @@ describe('directives', () => {
         spectator.detectChanges();
 
         expect('.loading').toHaveLength(0);
-        expect('.failed').toHaveLength(6);
+        expect('.failed').toHaveLength(5);
         expect('.success').toHaveLength(0);
 
-        expect('.failed.with-error-message').toHaveLength(3);
+        expect('.failed.with-error-message').toHaveLength(2);
         const errorElements = spectator.queryAll('.failed.with-error-message');
 
-        expect(errorElements).toHaveLength(3);
+        expect(errorElements).toHaveLength(2);
         errorElements.every((el) => expect(el).toHaveExactText('Failed!'));
 
         // success

@@ -8,7 +8,6 @@ export { onSuccess } from './lib/operators/on-success.operator';
 export { onFailed } from './lib/operators/on-failed.operator';
 export { mapSuccess } from './lib/operators/map-success.operator';
 
-export { LoadableDirectivesModule } from './lib/directives/loadable-directives.module';
 export { IfLoadingDirective } from './lib/directives/if-loading.directive';
 export { IfSuccessDirective } from './lib/directives/if-success.directive';
 export { IfFailedDirective } from './lib/directives/if-failed.directive';

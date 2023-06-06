@@ -52,7 +52,7 @@ export function observeProperty<T, K extends keyof T>(target: T, key: K): Observ
             if (nextValue !== subject.getValue()) {
                 subject.next(nextValue);
             }
-        }
+        },
     });
 
     return value$;
@@ -67,7 +67,7 @@ export function observeProperty<T, K extends keyof T>(target: T, key: K): Observ
  * @param key    Key of the property whose descriptor is to be retrieved.
  * @returns      The descriptor for the specified property or `undefined` if no such property exists on the target object.
  */
-function getPropertyDescriptor(target: any, key: PropertyKey): PropertyDescriptor | undefined {
+function getPropertyDescriptor(target: unknown, key: PropertyKey): PropertyDescriptor | undefined {
     if (target === null || target === undefined) {
         return undefined;
     }

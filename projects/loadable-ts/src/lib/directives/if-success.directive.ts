@@ -6,29 +6,28 @@ import {
     OnDestroy,
     OnInit,
     TemplateRef,
-    ViewContainerRef
+    ViewContainerRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, filter } from 'rxjs/operators';
 
 import { observeProperty } from '../utils/observe-property';
+import { isNotNullOrUndefined } from '../utils/is-not-null-or-undefined';
 
 import { coerceInput, LoadableDirectiveInput } from './coerce';
 
 @Directive({
-    selector: '[ifSuccess]'
+    standalone: true,
+    selector: '[ifSuccess]',
 })
 export class IfSuccessDirective<T> implements OnInit, OnDestroy {
     // alias when not using the "let x of y" micro-syntax
-    @Input() public set ifSuccess(value: string | LoadableDirectiveInput<T>) {
-        if (typeof value !== 'string') {
-            this.ifSuccessOf = value;
-        }
+    @Input() public set ifSuccess(value: LoadableDirectiveInput<T> | null) {
+        this.ifSuccessOf = value ?? undefined;
     }
 
-    @Input() public ifSuccessOf?: LoadableDirectiveInput<T>;
+    @Input() public ifSuccessOf?: LoadableDirectiveInput<T> | null;
 
-    private readonly context: IfSuccessDirectiveContext<T> = new IfSuccessDirectiveContext<T>();
     private viewRef?: EmbeddedViewRef<IfSuccessDirectiveContext<T>>;
 
     private readonly subscriptions = new Subscription();
@@ -42,7 +41,10 @@ export class IfSuccessDirective<T> implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         const loadableChanged$ = observeProperty(this as IfSuccessDirective<T>, 'ifSuccessOf');
-        const loadable$ = loadableChanged$.pipe(switchMap((loadable) => coerceInput(loadable)));
+        const loadable$ = loadableChanged$.pipe(
+            filter(isNotNullOrUndefined),
+            switchMap((loadable) => coerceInput(loadable)),
+        );
 
         // remove view whenever input changes, because new Observable can be empty.
         this.subscriptions.add(loadableChanged$.subscribe(() => {
@@ -53,17 +55,11 @@ export class IfSuccessDirective<T> implements OnInit, OnDestroy {
         this.subscriptions.add(loadable$.subscribe((loadable) => {
             this.changeDetector.markForCheck();
 
-            const loaded = loadable?.success ?? false;
-
-            if (loadable && loadable.success) {
-                this.context.$implicit = loadable.value;
-            }
-
-            if (loaded && !this.viewRef) {
-                this.viewRef = this.viewContainer.createEmbeddedView(this.templateRef, this.context);
-            }
-
-            if (!loaded && this.viewRef) {
+            if (loadable.success && this.viewRef) {
+                this.viewRef.context.$implicit = loadable.value;
+            } else if (loadable.success && !this.viewRef) {
+                this.viewRef = this.viewContainer.createEmbeddedView(this.templateRef, { $implicit: loadable.value });
+            } else if (!loadable.success && this.viewRef) {
                 this.viewRef = undefined;
                 this.viewContainer.clear();
             }
@@ -79,12 +75,12 @@ export class IfSuccessDirective<T> implements OnInit, OnDestroy {
     // https://angular.io/guide/structural-directives#improving-template-type-checking-for-custom-directives
     public static ngTemplateContextGuard<T>(
         _directive: IfSuccessDirective<T>, // tslint:disable-line:variable-name
-        context: unknown
+        context: unknown,
     ): context is IfSuccessDirectiveContext<T> {
         return !!context;
     }
 }
 
-export class IfSuccessDirectiveContext<T> {
-    public $implicit: T = null!;
+export interface IfSuccessDirectiveContext<T> {
+    $implicit: T;
 }

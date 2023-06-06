@@ -1,1 +1,40 @@
 <h1>Sample app</h1>
+
+<h2>Dynamic</h2>
+
+<p>Raw content:</p>
+<pre>{{ foo$ | async | json }}</pre>
+
+<div class="loading" *ifLoading="foo$">Loading 1...</div>
+<div class="loading" *ifLoading="foo$ | async">Loading 2...</div>
+
+<div class="success" *ifSuccess="foo$"></div>
+<div class="success" *ifSuccess="foo$ | async"></div>
+<div class="success" *ifSuccess="let value of foo$">{{ value.bar }}</div>
+<div class="success" *ifSuccess="let value of foo$ | async">{{ value.bar }}</div>
+<div class="success" *ifSuccess="let value of loading">{{ value.bar }}</div>
+
+<div class="failed" *ifFailed="foo$"></div>
+<div class="failed" *ifFailed="foo$ | async"></div>
+<div class="failed" *ifFailed="let error of foo$ | async">{{ error.message }}</div>
+
+<h2>Static</h2>
+
+<h3>Loading</h3>
+<div class="loading" *ifLoading="loading">Loading...</div>
+<div class="loading" *ifLoading="success">Should not be visible</div>
+<div class="loading" *ifLoading="error">Should not be visible</div>
+
+<h3>Succes</h3>
+<div class="success" *ifSuccess="success">Success!</div>
+<div class="success" *ifSuccess="let value of success">{{ value.bar }}</div>
+<div class="success" *ifSuccess="loading">Should not be visible</div>
+<div class="success" *ifSuccess="error">Should not be visible</div>
+
+<h3>Failed</h3>
+<div class="failed" *ifFailed="error">Failed!</div>
+<div class="failed" *ifFailed="let e of error">{{ e.message }}</div>
+<div class="failed" *ifFailed="loading">Should not be visible</div>
+<div class="failed" *ifFailed="success">Should not be visible</div>
+
+
