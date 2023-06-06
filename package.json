@@ -48,7 +48,7 @@
     "@commitlint/cli": "~17.6.5",
     "@commitlint/config-conventional": "~17.6.5",
     "@dscheerens/tslint-presets": "^9.0.0",
-    "@ngneat/spectator": "^5.0.0",
+    "@ngneat/spectator": "^15.0.0",
     "@types/jest": "^29.0.0",
     "@types/node": "~20.2.5",
     "all-contributors-cli": "~6.26.0",
