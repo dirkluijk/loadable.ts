@@ -10,7 +10,7 @@
         "url": "https://github.com/dirkluijk/loadable.ts"
     },
     "peerDependencies": {
-        "@angular/core": "^15.0.0",
+        "@angular/core": "^16.0.0",
         "rxjs": "^7.0.0"
     },
     "dependencies": {
