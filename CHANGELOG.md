@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/dirkluijk/loadable-ts/compare/v1.0.0-alpha.0...v1.0.0) (2023-06-06)
+
+
+### Bug Fixes
+
+* correct peer dependency for Angular 16 ([370c762](https://github.com/dirkluijk/loadable-ts/commit/370c7622b50d840382f938f617bff628124035b6))
+* make inference less strict again ([4dc769d](https://github.com/dirkluijk/loadable-ts/commit/4dc769df76e36d184a4b143eb2adbac07d826e19))
+
 ## [1.0.0-alpha.0](https://github.com/dirkluijk/loadable-ts/compare/v0.5.0...v1.0.0-alpha.0) (2023-06-06)
 
 ## [0.5.0](https://github.com/dirkluijk/loadable-ts/compare/v0.4.0...v0.5.0) (2023-06-06)
