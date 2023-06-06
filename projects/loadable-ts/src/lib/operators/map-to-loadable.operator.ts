@@ -4,7 +4,8 @@ import { catchError, map } from 'rxjs/operators';
 import { Loadable } from '../loadable.model';
 import { LOADING, success, failed } from '../factories';
 
-export function mapToLoadable<T, E = unknown>(): OperatorFunction<T, Loadable<T, E>> {
+// tslint:disable-next-line:no-any
+export function mapToLoadable<T, E = any>(): OperatorFunction<T, Loadable<T, E>> {
     return (source$: Observable<T>) => concat(
         of<Loadable<T, E>>(LOADING),
         source$.pipe(
