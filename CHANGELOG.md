@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/dirkluijk/loadable-ts/compare/v1.0.0...v1.0.1) (2023-06-06)
+
+
+### Bug Fixes
+
+* fixed TypeScript error in Angular templates ([e9b91e9](https://github.com/dirkluijk/loadable-ts/commit/e9b91e98235b8900d6e270d736065f59890045cd))
+
 ## [1.0.0](https://github.com/dirkluijk/loadable-ts/compare/v1.0.0-alpha.0...v1.0.0) (2023-06-06)
 
 
