@@ -119,6 +119,12 @@ const showError$ = foo$.pipe(map(isFailed));
 const fooValue$ = foo$.pipe(filter(isSuccess), map(it => it.value));
 ```
 
+Furthermore, we provide the following additional RxJS operators:
+
+* `onFailed()`: shorthand for `filter(isFailed)` and `map((it) => it.error)`
+* `onSuccess()`: shorthand for `filter(isSuccess)` and `map((it) => it.value)`
+* `mapSuccess(mapFn)`: allows you to map the `value` when it is `Success`
+
 ## Structural directives for Angular
 
 We also provide three useful structural directives for Angular.

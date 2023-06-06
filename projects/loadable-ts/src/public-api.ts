@@ -6,6 +6,7 @@ export { monad } from './lib/monad';
 export { mapToLoadable } from './lib/operators/map-to-loadable.operator';
 export { onSuccess } from './lib/operators/on-success.operator';
 export { onFailed } from './lib/operators/on-failed.operator';
+export { mapSuccess } from './lib/operators/map-success.operator';
 
 export { LoadableDirectivesModule } from './lib/directives/loadable-directives.module';
 export { IfLoadingDirective } from './lib/directives/if-loading.directive';
