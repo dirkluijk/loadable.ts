@@ -15,7 +15,9 @@
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate",
     "copy:docs": "cp ./*.md ./LICENSE dist/loadable-ts",
-    "release": "cd projects/loadable-ts && standard-version --infile ../../CHANGELOG.md && cd ../.. && yarn build"
+    "release": "standard-version && yarn build",
+    "release:minor": "standard-version --release-as minor && yarn build",
+    "release:major": "standard-version --release-as major && yarn build"
   },
   "private": false,
   "dependencies": {

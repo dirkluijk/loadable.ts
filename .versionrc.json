@@ -1,0 +1,4 @@
+{
+    "packageFiles": ["projects/loadable-ts/package.json"],
+    "bumpFiles": ["projects/loadable-ts/package.json"]
+}
