@@ -6,6 +6,6 @@ import { success } from '../factories';
 
 export function mapSuccess<T, U>(mapFn: (value: T) => U): OperatorFunction<Loadable<T>, Loadable<U>> {
     return (source$: Observable<Loadable<T>>) => source$.pipe(
-        map((it) => it.success ? success(mapFn(it.value)) : it)
+        map((it) => it.success ? success(mapFn(it.value)) : it),
     );
 }

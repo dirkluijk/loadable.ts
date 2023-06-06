@@ -6,20 +6,22 @@ import {
     OnDestroy,
     OnInit,
     TemplateRef,
-    ViewContainerRef
+    ViewContainerRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, filter } from 'rxjs/operators';
 
 import { observeProperty } from '../utils/observe-property';
+import { isNotNullOrUndefined } from '../utils/is-not-null-or-undefined';
 
 import { coerceInput, LoadableDirectiveInput } from './coerce';
 
 @Directive({
-    selector: '[ifLoading]'
+    standalone: true,
+    selector: '[ifLoading]',
 })
 export class IfLoadingDirective implements OnInit, OnDestroy {
-    @Input() public ifLoading?: LoadableDirectiveInput<unknown>;
+    @Input() public ifLoading?: LoadableDirectiveInput<unknown> | null;
 
     private viewRef?: EmbeddedViewRef<void>;
 
@@ -34,7 +36,10 @@ export class IfLoadingDirective implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         const loadableChanged$ = observeProperty(this as IfLoadingDirective, 'ifLoading');
-        const loadable$ = loadableChanged$.pipe(switchMap((loadable) => coerceInput(loadable)));
+        const loadable$ = loadableChanged$.pipe(
+            filter(isNotNullOrUndefined),
+            switchMap((loadable) => coerceInput(loadable)),
+        );
 
         // remove view whenever input changes, because new Observable can be empty.
         this.subscriptions.add(loadableChanged$.subscribe(() => {

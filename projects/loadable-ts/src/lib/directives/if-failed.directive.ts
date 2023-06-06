@@ -6,29 +6,28 @@ import {
     OnDestroy,
     OnInit,
     TemplateRef,
-    ViewContainerRef
+    ViewContainerRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, filter } from 'rxjs/operators';
 
 import { observeProperty } from '../utils/observe-property';
+import { isNotNullOrUndefined } from '../utils/is-not-null-or-undefined';
 
 import { coerceInput, LoadableDirectiveInput } from './coerce';
 
 @Directive({
-    selector: '[ifFailed]'
+    standalone: true,
+    selector: '[ifFailed]',
 })
 export class IfFailedDirective<E> implements OnInit, OnDestroy {
     // alias when not using the "let x of y" micro-syntax
-    @Input() public set ifFailed(value: string | LoadableDirectiveInput<unknown, E>) {
-        if (typeof value !== 'string') {
-            this.ifFailedOf = value;
-        }
+    @Input() public set ifFailed(value: LoadableDirectiveInput<unknown, E> | null) {
+        this.ifFailedOf = value ?? undefined;
     }
 
-    @Input() public ifFailedOf?: LoadableDirectiveInput<unknown, E>;
+    @Input() public ifFailedOf?: LoadableDirectiveInput<unknown, E> | null;
 
-    private readonly context: IfFailedDirectiveContext<E> = new IfFailedDirectiveContext<E>();
     private viewRef?: EmbeddedViewRef<IfFailedDirectiveContext<E>>;
 
     private readonly subscriptions = new Subscription();
@@ -42,7 +41,10 @@ export class IfFailedDirective<E> implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         const loadableChanged$ = observeProperty(this as IfFailedDirective<E>, 'ifFailedOf');
-        const loadable$ = loadableChanged$.pipe(switchMap((loadable) => coerceInput(loadable)));
+        const loadable$ = loadableChanged$.pipe(
+            filter(isNotNullOrUndefined),
+            switchMap((loadable) => coerceInput(loadable)),
+        );
 
         // remove view whenever input changes, because new Observable can be empty.
         this.subscriptions.add(loadableChanged$.subscribe(() => {
@@ -53,17 +55,11 @@ export class IfFailedDirective<E> implements OnInit, OnDestroy {
         this.subscriptions.add(loadable$.subscribe((loadable) => {
             this.changeDetector.markForCheck();
 
-            const failed = loadable?.failed ?? false;
-
-            if (loadable && loadable.failed) {
-                this.context.$implicit = loadable.error;
-            }
-
-            if (failed && !this.viewRef) {
-                this.viewRef = this.viewContainer.createEmbeddedView(this.templateRef, this.context);
-            }
-
-            if (!failed && this.viewRef) {
+            if (loadable.failed && this.viewRef) {
+                this.viewRef.context.$implicit = loadable.error;
+            } else if (loadable.failed && !this.viewRef) {
+                this.viewRef = this.viewContainer.createEmbeddedView(this.templateRef, { $implicit: loadable.error });
+            } else if (!loadable.failed && this.viewRef) {
                 this.viewRef = undefined;
                 this.viewContainer.clear();
             }
@@ -79,12 +75,12 @@ export class IfFailedDirective<E> implements OnInit, OnDestroy {
     // https://angular.io/guide/structural-directives#improving-template-type-checking-for-custom-directives
     public static ngTemplateContextGuard<E>(
         _directive: IfFailedDirective<E>, // tslint:disable-line:variable-name
-        context: unknown
+        context: unknown,
     ): context is IfFailedDirectiveContext<E> {
         return !!context;
     }
 }
 
-export class IfFailedDirectiveContext<E> {
-    public $implicit: E = null!;
+export interface IfFailedDirectiveContext<E> {
+    $implicit: E;
 }
