@@ -22,8 +22,10 @@ import { coerceInput, LoadableDirectiveInput } from './coerce';
 })
 export class IfFailedDirective<E> implements OnInit, OnDestroy {
     // alias when not using the "let x of y" micro-syntax
-    @Input() public set ifFailed(value: LoadableDirectiveInput<unknown, E> | null) {
-        this.ifFailedOf = value ?? undefined;
+    @Input() public set ifFailed(value: string | LoadableDirectiveInput<unknown, E> | null) {
+        if (typeof value !== 'string') {
+            this.ifFailedOf = value ?? undefined;
+        }
     }
 
     @Input() public ifFailedOf?: LoadableDirectiveInput<unknown, E> | null;
