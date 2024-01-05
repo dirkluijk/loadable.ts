@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/dirkluijk/loadable-ts/compare/v1.0.1...v1.1.0) (2024-01-05)
+
+
+### Features
+
+* add support for Angular 17 ([#8](https://github.com/dirkluijk/loadable-ts/issues/8)) ([52c1570](https://github.com/dirkluijk/loadable-ts/commit/52c15709ae35782ee75f8dbca256794aee77e296))
+
 ### [1.0.1](https://github.com/dirkluijk/loadable-ts/compare/v1.0.0...v1.0.1) (2023-06-06)
 
 
